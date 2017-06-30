@@ -48,13 +48,14 @@ class Bot(BaseBot):
         sorted_list = sorted(words_to_count.items(), key=lambda d: d[1], reverse=True)
 
         start_pos = int(splitted[1]) if len(splitted) > 1 else 0
+        paged_list = sorted_list[start_pos:start_pos+10]
         word_list = '\n'.join([
             '{}, {}'.format(word, count)
             for word, count
-            in sorted_list[start_pos:start_pos+10]
+            in paged_list
         ])
 
-        has_next = len(word_list) == 10
+        has_next = len(paged_list) == 10
         message = Message(event).set_text(word_list)
 
         if has_next:
